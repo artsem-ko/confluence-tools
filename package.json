@@ -10,7 +10,7 @@
     "eslint": "eslint",
     "lint": "eslint *.* --no-warn-ignored",
     "lint:staged": "lint-staged",
-    "prepare": "nx run-many --target=build --all",
+    "prepare": "pnpm nx run-many --target=build --all",
     "check:all": "pnpm nx run-many -t check:all --all",
     "check:spell": "cspell *.* .husky/*.* .github/*.*"
   },
