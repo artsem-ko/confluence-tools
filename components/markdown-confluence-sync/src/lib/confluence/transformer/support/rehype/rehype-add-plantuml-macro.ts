@@ -12,9 +12,10 @@ const rehypeAddPlantumlMacro: UnifiedPlugin<[], Root> =
     return function transformer(tree) {
         replace(tree, { type: "element", tagName: "pre" }, (node) => {
         const umlElement = node.children.find(
-            (child) =>
-            child.type === "text" &&
-            isPlantUml((child as HastText).value),
+          (child) =>
+            child.type === "element" &&
+            (child as HastElement).tagName === "code" &&
+            extractLanguage(child)?.includes("uml")
         ) as HastElement | undefined;
 
         if (!umlElement) {
@@ -68,10 +69,6 @@ const rehypeAddPlantumlMacro: UnifiedPlugin<[], Root> =
     };
   };
 
-function isPlantUml(str: string): boolean {
-    return str.includes("@startuml") && str.includes("@enduml")
-}
-
 function extractTextContent(element: HastElement): string {
   let text = "";
 
@@ -84,6 +81,27 @@ function extractTextContent(element: HastElement): string {
   }
 
   return text;
+}
+
+function extractLanguage(codeElement: HastElement): string | undefined {
+  const className = codeElement.properties?.className;
+
+  if (!className) {
+    return undefined;
+  }
+
+  // className is always an array of strings, but we check it for safety
+  // istanbul ignore next
+  const classNames = Array.isArray(className) ? className : [className];
+
+  // Look for a class that starts with "language-"
+  for (const cls of classNames) {
+    if (typeof cls === "string" && cls.startsWith("language-")) {
+      return cls.substring(9); // Remove "language-" prefix
+    }
+  }
+
+  return undefined;
 }
 
 export default rehypeAddPlantumlMacro;
