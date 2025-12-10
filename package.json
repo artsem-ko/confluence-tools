@@ -1,5 +1,5 @@
 {
-  "name": "@telefonica/confluence-tools",
+  "name": "@artsem-ko/confluence-tools",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -10,7 +10,7 @@
     "eslint": "eslint",
     "lint": "eslint *.* --no-warn-ignored",
     "lint:staged": "lint-staged",
-    "prepare": "husky install",
+    "prepare": "nx run-many --target=build --all",
     "check:all": "pnpm nx run-many -t check:all --all",
     "check:spell": "cspell *.* .husky/*.* .github/*.*"
   },

@@ -37,6 +37,7 @@ import rehypeReplaceTaskList from "./support/rehype/rehype-replace-task-list.js"
 import remarkRemoveFootnotes from "./support/remark/remark-remove-footnotes.js";
 import remarkRemoveMdxCodeBlocks from "./support/remark/remark-remove-mdx-code-blocks.js";
 import remarkReplaceMermaid from "./support/remark/remark-replace-mermaid.js";
+import rehypeAddPlantumlMacro from "./support/rehype/rehype-add-plantuml-macro.js";
 
 const DEFAULT_NOTICE_MESSAGE =
   "AUTOMATION NOTICE: This page is synced automatically, changes made manually will be lost";
@@ -112,7 +113,8 @@ export const ConfluencePageTransformer: ConfluencePageTransformerConstructor = c
         .use(rehypeAddNotice, { noticeMessage })
         .use(rehypeReplaceDetails)
         .use(rehypeReplaceStrikethrough)
-        .use(rehypeReplaceTaskList);
+        .use(rehypeReplaceTaskList)
+        .use(rehypeAddPlantumlMacro);
 
       // Conditionally add code blocks plugin
       if (this._rehypeCodeBlocksEnabled) {
