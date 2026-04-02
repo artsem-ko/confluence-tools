@@ -15,7 +15,7 @@ const rehypeAddPlantumlMacro: UnifiedPlugin<[], Root> =
           (child) =>
             child.type === "element" &&
             (child as HastElement).tagName === "code" &&
-            extractLanguage(child)?.includes("uml")
+            extractLanguage(child)?.includes("plantuml")
         ) as HastElement | undefined;
 
         if (!umlElement) {
